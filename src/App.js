@@ -1,10 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import Grades from './Components/Grades.js';
+import Box from "@material-ui/core/Box";
+import Container from "@material-ui/core/Container";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
+    <Container className="Container" style={{textAlign: "center"}} fixed maxWidth="sm">
+      <Box>
+        <Grades></Grades>
+      </Box>
+      {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -17,8 +23,9 @@ function App() {
         >
           Learn React
         </a>
-      </header>
-    </div>
+      </header> */}
+     
+     </Container>
   );
 }
 
