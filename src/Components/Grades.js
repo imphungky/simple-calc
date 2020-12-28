@@ -2,7 +2,10 @@ import React, {useState} from "react";
 import Button from "@material-ui/core/Button";
 import {styled} from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import './Grades.css';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Clear';
+import Box from '@material-ui/core/Box';
+import {Link} from 'react-router-dom';
 
 const MyButton = styled(Button)({
     background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -19,20 +22,34 @@ const MyButton = styled(Button)({
   const MyTextField = styled(TextField)({
       color: 'white',
       margin: 8
-  })
+  });
+
+  const MyBox = styled(Box)({
+    background: 'white',
+    borderRadius: 6
+  });
+  
 
 
 function Grades() {
-    const [num_grades, set_amount] = useState(() => [['','']]);
+    const [num_grades, set_amount] = useState(() => [['',''], ['',''], ['','']]);
     const [showfinal, set_display] = useState(() => false);
     const [finalgrade, set_finalgrade] = useState(() => 0);
     function addgrade() {
         set_amount(prev_grades => {return [...prev_grades, ['','']]});
     }
 
+    function removegrade(e) {
+        set_amount(prev_grades => {
+            const lst = [...prev_grades];
+            lst.splice(e.target.id, 1);
+            return lst;
+        });
+    }
+
     function inputHandle(e) {
         set_amount(prev_grades => {
-            const lst = [...num_grades];
+            const lst = [...prev_grades];
             lst[e.target.id][e.target.name] = e.target.value;
             return lst;
         })
@@ -41,15 +58,13 @@ function Grades() {
     function handledata() {
         let display = [];
         for(var i=0; i < num_grades.length; i++) {
-            display.push(<div><MyTextField required label={"Grade" + (i+1)} value={num_grades[i][0]} id={i} name={0} onChange={(e) => inputHandle(e)}></MyTextField>
-                       <MyTextField required label={"Weight" + (i+1)} value={num_grades[i][1]} id={i} name={1} onChange={(e) => inputHandle(e)}></MyTextField></div>)
+            display.push(<div><MyTextField type="number" label={"Grade" + (i+1)} value={num_grades[i][0]} id={i} name={0} onChange={(e) => inputHandle(e)}></MyTextField>
+                       <MyTextField type="number" label={"Weight" + (i+1)} value={num_grades[i][1]} id={i} name={1} onChange={(e) => inputHandle(e)}></MyTextField>
+                       <IconButton onClick={(e) => removegrade(e)} aria-label="delete"><DeleteIcon/></IconButton></div>);
         }
         return display;
     }
 
-    function renderinputbox(data) {
-        return <input type="text" value={data}></input>;
-    }
 
     function calculateResults() {
         console.log(num_grades);
@@ -72,14 +87,14 @@ function Grades() {
 
 
 
-    return (<React.Fragment>
-            <div><h1>Simple-Calc</h1></div>
+    return (<div><div><h1>Simple-Calc</h1></div><MyBox>
             <div>{!showfinal && handledata()}</div>
             <div>{showfinal && <h2>{finalgrade + ' %'}</h2>}</div>
            {!showfinal && <MyButton onClick={addgrade}>add grade</MyButton>}
             {!showfinal && <MyButton onClick={calculateResults}>calculate</MyButton>}
             {showfinal && <MyButton onClick={restart}>Calculate again</MyButton>}
-        </React.Fragment>)
+            </MyBox>
+            <Link to="/register">register</Link>/<Link to="/login">login</Link> to save your results</div>)
     
 }
 export default Grades
