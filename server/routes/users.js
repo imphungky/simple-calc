@@ -6,7 +6,6 @@ router.route('/get').get((req, res) => {
     .then((user) => {
         if(user.password == req.body.password) {
             res.status(200).json(user);
-            
         }
         else {
             res.status(409);
