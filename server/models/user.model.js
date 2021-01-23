@@ -14,6 +14,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         minlength: 5
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    verified: {
+        type: Boolean,
+        required: true
     }
 }, {});
 
