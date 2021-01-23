@@ -22,5 +22,5 @@ Since there is no current script to run both the client and server, there are tw
 
 ## Contributors
 
-- @imphungky
-- @jcserv
+- [@imphungky](https://github.com/imphungky)
+- [@jcserv](https://github.com/jcserv)
