@@ -4,7 +4,9 @@ const initialState = {
     verified: false,
     isLoading: false,
     isLoaded: false,
-    isExpired: false
+    isExpired: false,
+    emailError: false,
+    emailSent: false
 };
 
 const userReducer = (state = initialState, action) => {
@@ -33,7 +35,6 @@ const userReducer = (state = initialState, action) => {
                 isLoading: false
             }
         case "USER_LOADED":
-            console.log(action.payload.verified);
             return {
                 ...state,
                 isLogged: true,
@@ -42,6 +43,17 @@ const userReducer = (state = initialState, action) => {
                 grades: action.payload.courses,
                 verified: action.payload.verified
             };
+        case "EMAIL_SENT":
+            return {
+                ...state,
+                emailSent: true
+            }
+        case "SEND_EMAIL_ERROR":
+            return {
+                ...state,
+                emailError: true,
+                emailSent: false
+            }
         case "EMAIL_VERIFIED":
             return {
                 ...state,

@@ -45,7 +45,6 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
         //get course id from the button clicked and dispatch the delete action
         //update local state, unsure if this is necessary as the action should update the state as well but this ensures it
         else if(type === "REMOVE") {
-            console.log(e.currentTarget.value);
             const id = e.currentTarget.value;
             let params = [displaycourses[id], id];
             dispatchauth(authAction, deleteCourse, params);
@@ -80,11 +79,9 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
     Takes the courses we have in state and renders it
     */
     function renderCourses() {
-        console.log("rendercourse");
         let display = [];
         if(displaycourses.length > 0) {
             for(var i = 0; i < displaycourses.length; i++) {
-                console.log(displaycourses[i]);
                 // display.push( <Grid item key={"Grid" + i} m={6} lg={4}><Courses handler={redirect} key={i} index={i} course={displaycourses[i]}/></Grid>);
                 display.push(<Courses handler={redirect} key={i} index={i} course={displaycourses[i]} gradeColour={gradeColour} />)
             }
@@ -99,7 +96,6 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
 
     useEffect(() => {
         if(isLoaded) {
-            console.log(grades);
             setCourses(grades);
         }
         if(isLoaded && !verified) {

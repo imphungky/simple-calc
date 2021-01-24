@@ -42,7 +42,6 @@ async function sendMail(email, username) {
             `
         }
         const result = await transport.sendMail(mailOptions)
-        console.log("46");
         return result;
     }
     catch (error) {

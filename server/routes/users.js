@@ -29,7 +29,6 @@ router.route('/login').post(async (req, res) => {
                 }
                 else {
                     let payload = await genToken(user.username);
-                    console.log(payload);
                     if(payload != "Error") {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
@@ -71,7 +70,6 @@ router.route('/loadverify').get(auth, async (req, res)  => {
 
 router.route('/refreshtoken').get(async (req, res) => {
     if(req.cookies["token"]) {
-        console.log("refresh")
         const decoded = jwt.verify(req.cookies["token"], "secret");
         let tokens = await genToken(decoded.username);
             res.cookie('token', tokens[1], {
@@ -83,13 +81,11 @@ router.route('/refreshtoken').get(async (req, res) => {
         return res.status(200).json({token: tokens[0]});
     }
     else {
-        console.log("notrefresh")
         res.sendStatus(401)
     }
 })
 
 router.route('/register').post( async (req, res) => {
-    console.log(req.body.email);
     User.findOne({username:req.body.username})
     .then((user) => {
         //username not taken
@@ -124,10 +120,21 @@ router.route('/register').post( async (req, res) => {
     })
 })
 
+router.route('/resend').post(auth, async (req, res) => {
+    let username = req.user;
+    User.findOne({username: username})
+    .then((user) => {
+        sendMail(user.email, user._id);
+        return res.sendStatus(200);
+    })
+    .catch((err) => {
+        return res.sendStatus(403);
+    })
+});
+
 router.route('/clearcookie').delete(async (req, res) => {
     res.clearCookie('token');
-    console.log("cleared");
-    res.send('cookie cleared');
+    res.status(200).send('cookie cleared');
 })
 
 module.exports = router;

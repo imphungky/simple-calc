@@ -14,7 +14,6 @@ export const loadCourse = (course) => async dispatch => {
 export const addCourse = (course) => async dispatch => {
     if(localStorage.token != null) {
         setAuthToken(localStorage.token);
-        console.log(localStorage.token);
     }
     let body = {
         grades: course.grades,
@@ -30,10 +29,8 @@ export const addCourse = (course) => async dispatch => {
 }
 
 export const deleteCourse = (course, id) => async dispatch => {
-    console.log(course);
     if(localStorage.token != null) {
         setAuthToken(localStorage.token);
-        console.log(localStorage.token);
     }
     axiosConfig.delete("/courses/delete", {data: course})
     .then((res) => dispatch({

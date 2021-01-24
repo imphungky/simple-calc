@@ -26,7 +26,6 @@ function AddCourseButton({handler}) {
     const initialRef = useRef();
     function addCourse(e) {
         e.currentTarget.value = coursename;
-        console.log(e.currentTarget.value);
         handler(e, "ADD");
         onClose();
   }

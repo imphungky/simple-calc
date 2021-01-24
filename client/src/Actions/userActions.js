@@ -35,12 +35,26 @@ export const login = (user, pass) => async (dispatch) => {
     });
 }
 
+export const resendVerify = () => async (dispatch) => {
+    let url = "/users/resend"
+    axiosConfig.post(url)
+    .then((response) => {
+        dispatch({
+            type: "EMAIL_SENT"
+        })
+    })
+    .catch((err) => {
+        dispatch({
+            type: "SEND_EMAIL_ERROR"
+        });
+    })
+}
+
 export const verify = (id) => async (dispatch) => {
     let body = {id: id};
     axiosConfig.post('/users/verify', body)
     .then((res) => {
         if(res.status != 200) {
-            console.log('Error' + res.json);
         }
         else {
             dispatch({

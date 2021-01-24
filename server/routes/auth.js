@@ -29,7 +29,6 @@ async function auth(req, res, next) {
   } catch (err) {
     // Throw error
     // use refresh token to try again
-    console.log(err);
     res.status(401).json({ msg: "Token is not valid" });
   }
   }
