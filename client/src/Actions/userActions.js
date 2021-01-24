@@ -6,7 +6,7 @@ import axiosConfig from "../utils/axiosConfig";
 export const login = (user, pass) => async (dispatch) => {
     const url = "/users/login";
     const body = {username: user, password: pass};
-    axiosConfig.post(url, body, {withCredentials: "include"})
+    axiosConfig.post(url, body, {withCredentials: true})
     .then((res) => {
         //dispatch to state
         setAccessToken(res.data.token);
@@ -101,7 +101,7 @@ export const register = (email, username, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
     let url = "/users/clearcookie";
-    axiosConfig.delete(url, {withCredentials: 'include'}).then((response) => {
+    axiosConfig.delete(url, {withCredentials: true}).then((response) => {
         dispatch({
             type: "LOGOUT"
         });
