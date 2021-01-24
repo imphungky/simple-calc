@@ -30,7 +30,7 @@ connection.once('open', () => {
 
 app.use(cors({
     credentials: true,
-    origin: "http://localhost:3000"
+    origin: "https://suspicious-fermat-4ecc1f.netlify.app"
 })); //middleware
 app.use(express.json()); //send and receive json files
 app.use('/users', usersRouter);
