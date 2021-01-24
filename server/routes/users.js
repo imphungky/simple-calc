@@ -33,6 +33,7 @@ router.route('/login').post(async (req, res) => {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
                             httpOnly: true,
+                            secure: true,
                             overwrite: true,
                             path: "/"
                         });
@@ -76,6 +77,7 @@ router.route('/refreshtoken').get(async (req, res) => {
             maxAge: 1000 * 60 * 30,
             httpOnly: true,
             overwrite: true,
+            secure: true,
             path: "/"
         });
         return res.status(200).json({token: tokens[0]});
