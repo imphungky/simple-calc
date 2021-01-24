@@ -29,7 +29,7 @@ function LandingPage() {
         <Heading as="h1" textAlign="center" size="4xl" mt="100">
             <Box as="span">
             Stay on Top with <br/>
-            Grade.<Box as="span"color="#6ABFFD">io</Box>
+            Grade-<Box as="span"color="#6ABFFD">calc</Box>
             </Box>
         </Heading>
         <Text align="center" fontSize="lg" m="3">

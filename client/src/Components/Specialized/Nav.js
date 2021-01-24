@@ -53,7 +53,7 @@ function ButtonAppBar({isLogged, logout, clearErr, isLoaded}) {
         <Box p="2">
           <Button variant="ghost" onClick={logoHandle}>
           <Heading>
-            Grade.<Box as="span" color="#6ABFFD">io</Box>
+            Grade-<Box as="span" color="#6ABFFD">calc</Box>
           </Heading>
           </Button>
         </Box>
