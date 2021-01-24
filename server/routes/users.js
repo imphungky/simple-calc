@@ -32,6 +32,7 @@ router.route('/login').post(async (req, res) => {
                     if(payload != "Error") {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
+                            domain: "https://www.grade-calc.com",
                             httpOnly: true,
                             secure: true,
                             overwrite: true,
@@ -75,6 +76,7 @@ router.route('/refreshtoken').get(async (req, res) => {
         let tokens = await genToken(decoded.username);
             res.cookie('token', tokens[1], {
             maxAge: 1000 * 60 * 30,
+            domain: "https://www.grade-calc.com",
             httpOnly: true,
             overwrite: true,
             secure: true,
