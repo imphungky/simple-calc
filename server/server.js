@@ -30,7 +30,7 @@ connection.once('open', () => {
 
 app.use(cors({
     credentials: true,
-    origin: "https://suspicious-fermat-4ecc1f.netlify.app"
+    origin: "https://www.grade-calc.com"
 })); //middleware
 app.use(express.json()); //send and receive json files
 app.use('/users', usersRouter);

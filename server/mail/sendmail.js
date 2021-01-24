@@ -38,7 +38,7 @@ async function sendMail(email, username) {
             html: 
             `
             <h1>Thank you for registering on Grade.io</h1> <br/> 
-            Please click <a href="http://localhost:3000/confirm/${username}">Here</a> to verify your account
+            Please click <a href="https://www.grade-calc.com/confirm/${username}">Here</a> to verify your account
             `
         }
         const result = await transport.sendMail(mailOptions)
