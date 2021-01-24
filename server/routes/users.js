@@ -32,9 +32,9 @@ router.route('/login').post(async (req, res) => {
                     if(payload != "Error") {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
-                            domain: "https://www.grade-calc.com",
                             httpOnly: true,
                             secure: true,
+                            sameSite: 'none',
                             overwrite: true,
                             path: "/"
                         });
@@ -74,12 +74,12 @@ router.route('/refreshtoken').get(async (req, res) => {
     if(req.cookies["token"]) {
         const decoded = jwt.verify(req.cookies["token"], "secret");
         let tokens = await genToken(decoded.username);
-            res.cookie('token', tokens[1], {
+        res.cookie('token', tokens[1], {
             maxAge: 1000 * 60 * 30,
-            domain: "https://www.grade-calc.com",
             httpOnly: true,
             overwrite: true,
             secure: true,
+            sameSite: 'none',
             path: "/"
         });
         return res.status(200).json({token: tokens[0]});
