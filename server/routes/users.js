@@ -71,7 +71,7 @@ router.route('/loadverify').get(auth, async (req, res)  => {
 });
 
 router.route('/refreshtoken').get(async (req, res) => {
-    if(req.cookies["token"]) {
+    if(req.cookies["token"] && req.cookies["token"] != '') {
         const decoded = jwt.verify(req.cookies["token"], "secret");
         let tokens = await genToken(decoded.username);
         res.cookie('token', tokens[1], {
@@ -137,7 +137,14 @@ router.route('/resend').post(auth, async (req, res) => {
 });
 
 router.route('/clearcookie').delete(async (req, res) => {
-    res.clearCookie('token');
+    res.cookie('token', '', {
+        maxAge: 1000 * 60 * 30,
+        httpOnly: true,
+        overwrite: true,
+        secure: true,
+        sameSite: 'none',
+        path: "/"
+    });
     res.status(200).send('cookie cleared');
 })
 
