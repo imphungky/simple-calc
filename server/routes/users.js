@@ -32,7 +32,6 @@ router.route('/login').post(async (req, res) => {
                     if(payload != "Error") {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
-                            domain: "grade-calc.com",
                             httpOnly: true,
                             secure: true,
                             sameSite: 'lax',
@@ -77,7 +76,6 @@ router.route('/refreshtoken').get(async (req, res) => {
         let tokens = await genToken(decoded.username);
         res.cookie('token', tokens[1], {
             maxAge: 1000 * 60 * 30,
-            domain: "grade-calc.com",
             httpOnly: true,
             overwrite: true,
             sameSite: 'lax',
@@ -140,7 +138,6 @@ router.route('/resend').post(auth, async (req, res) => {
 router.route('/clearcookie').delete(async (req, res) => {
     res.cookie('token', '', {
         maxAge: 1000 * 60 * 30,
-        domain: "grade-calc.com",
         httpOnly: true,
         overwrite: true,
         sameSite: 'lax',
