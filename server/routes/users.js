@@ -34,7 +34,7 @@ router.route('/login').post(async (req, res) => {
                             maxAge: 1000 * 60 * 30,
                             httpOnly: true,
                             secure: true,
-                            sameSite: 'lax',
+                            sameSite: 'none',
                             overwrite: true,
                             path: "/"
                         });
@@ -79,7 +79,7 @@ router.route('/refreshtoken').get(async (req, res) => {
             httpOnly: true,
             secure: true,
             overwrite: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             path: "/"
         });
         return res.status(200).json({token: tokens[0]});
@@ -142,7 +142,7 @@ router.route('/clearcookie').delete(async (req, res) => {
         httpOnly: true,
         secure: true,
         overwrite: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: "/"
     });
     res.status(200).send('cookie cleared');
