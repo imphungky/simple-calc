@@ -79,7 +79,6 @@ router.route('/refreshtoken').get(async (req, res) => {
             domain: "grade-calc.com",
             httpOnly: true,
             overwrite: true,
-            secure: true,
             sameSite: 'lax',
             path: "/"
         });
@@ -143,7 +142,6 @@ router.route('/clearcookie').delete(async (req, res) => {
         domain: "grade-calc.com",
         httpOnly: true,
         overwrite: true,
-        secure: true,
         sameSite: 'lax',
         path: "/"
     });
