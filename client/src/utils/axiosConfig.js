@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "http://api.grade-calc.com"
+    baseURL: "https://grade-io.herokuapp.com/"
 });
 
 export default instance;

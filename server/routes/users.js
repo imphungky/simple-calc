@@ -79,7 +79,7 @@ router.route('/refreshtoken').get(async (req, res) => {
             domain: "grade-calc.com",
             httpOnly: true,
             overwrite: true,
-            sameSite: 'lax',
+            sameSite: 'none',
             path: "/"
         });
         return res.status(200).json({token: tokens[0]});
@@ -142,7 +142,7 @@ router.route('/clearcookie').delete(async (req, res) => {
         domain: "grade-calc.com",
         httpOnly: true,
         overwrite: true,
-        sameSite: 'lax',
+        sameSite: 'none',
         path: "/"
     });
     res.status(200).send('cookie cleared');
