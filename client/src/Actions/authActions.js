@@ -4,7 +4,7 @@ import setAuth from "../utils/setAuth";
 const authAction = (action, params) => async dispatch => {
     try {
         if(!getAccessToken()) {
-            axiosConfig.get('/users/refreshtoken', {withCredentials:'include'})
+            axiosConfig.get('/users/refreshtoken', {withCredentials: true})
             .then((response) => {
                 setAccessToken(response.data.token);
                 setAuth(response.data.token);
