@@ -33,7 +33,6 @@ router.route('/login').post(async (req, res) => {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
                             httpOnly: true,
-                            secure: true,
                             sameSite: 'lax',
                             overwrite: true,
                             path: "/"
