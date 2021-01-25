@@ -32,9 +32,10 @@ router.route('/login').post(async (req, res) => {
                     if(payload != "Error") {
                         res.cookie('token', payload[1], {
                             maxAge: 1000 * 60 * 30,
+                            domain: "grade-calc.com",
                             httpOnly: true,
                             secure: true,
-                            sameSite: 'none',
+                            sameSite: 'lax',
                             overwrite: true,
                             path: "/"
                         });
@@ -79,7 +80,7 @@ router.route('/refreshtoken').get(async (req, res) => {
             domain: "grade-calc.com",
             httpOnly: true,
             overwrite: true,
-            sameSite: 'none',
+            sameSite: 'lax',
             path: "/"
         });
         return res.status(200).json({token: tokens[0]});
@@ -142,7 +143,7 @@ router.route('/clearcookie').delete(async (req, res) => {
         domain: "grade-calc.com",
         httpOnly: true,
         overwrite: true,
-        sameSite: 'none',
+        sameSite: 'lax',
         path: "/"
     });
     res.status(200).send('cookie cleared');
