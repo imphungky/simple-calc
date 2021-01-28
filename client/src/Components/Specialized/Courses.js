@@ -35,19 +35,19 @@ export default function Courses({course, index, handler, gradeColour}) {
   }, [course]);
 
   return (
-    <Flex justify="center" value={index} bg="#6ABFFD" direction="column" h={["40vh", "40vh", "40vh", "25vh"]} rounded="md">
-      <Flex justify="center"direction="column" alignItems="center" borderRadius={4}>
-        <Box fontWeight="semibold" color="white" as="h4" fontSize={"4xl"}  maxH="30%" maxW={["25vw","25vw","15vw"]} isTruncated mb="2">
+    <Flex justify="center" alignItems="center" value={index} bg="#6ABFFD" direction="column"  rounded="md" p="8">
+      {/* <Flex justify="center"direction="column" alignItems="center" borderRadius={4}> */}
+        <Box fontWeight="semibold" color="white" as="h4" fontSize={"4xl"} maxW={["25vw","25vw","15vw"]} isTruncated mb="2">
           {courseinfo.coursename}
         </Box>
         <Box fontWeight="semibold" color={gradeColour(courseinfo.finalgrade)} as="h4" fontSize="3xl" isTruncated mb="10">
-          {courseinfo.finalgrade}%
+          {courseinfo.finalgrade == -1 ? 'No Grades' : courseinfo.finalgrade + '%'}
         </Box>
-        <Box>
-        <IconButton isRound mr="5"size="md" value={index} onClick={(e) => handler(e, "MODIFY")}icon={<EditIcon />}></IconButton>
+        <Box isTruncated >
+        <IconButton isRound mr="5" size="md" value={index} onClick={(e) => handler(e, "MODIFY")}icon={<EditIcon />}></IconButton>
           <IconButton isRound ml="5" size="md"  onClick={onOpen}icon={<DeleteIcon />}></IconButton>
         </Box>
-      </Flex>
+      {/* </Flex> */}
       <Modal isCentered initialFocusRef={initialRef} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

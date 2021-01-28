@@ -33,9 +33,6 @@ function ButtonAppBar({isLogged, logout, clearErr, isLoaded}) {
     if(!isLogged) {
       history.push("/");
     }
-    else {
-      history.push("/profile");
-    }
   }
 
   /*

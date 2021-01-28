@@ -54,7 +54,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
            let info = {
                grades: [["", ""], ["", ""], ["", ""]],
                coursename: e.currentTarget.value,
-               finalgrade: 100,
+               finalgrade: -1,
            }
            let params = [info];
            dispatchauth(authAction, addCourse, params);
@@ -64,7 +64,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
 
     function gradeColour(grade) {
         grade = Math.floor(grade);
-        if(grade < 60) {
+        if(0 <= grade && grade < 60) {
           return "#ff0000";
         }
         else if(60 <= grade && grade <= 75) {
@@ -72,6 +72,9 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
         }
         else if(76 <= grade && grade <= 100) {
           return "#89ff57";
+        }
+        else {
+            return "white";
         }
       }
 
@@ -109,7 +112,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
     //parse grades but only keep the final grade and the course name
     
     return (
-    <Box justify="center" mt="15" w="100%">
+    <Box aligntItems="center" alignContent="center" justify="center" mt="15" w="100%" h="100%">
         {isLoaded && <Tabs variant="soft-rounded" colorScheme="blue" align="center" p="5">
             <TabList>
                 <Tab onClick={() => setshowcourses(true)}>
@@ -121,7 +124,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
             </TabList>
             <TabPanels>
             <TabPanel>
-                <Flex justify="center" w="100%">
+                <Flex justify="center" w="100%" h={["100%"]}>
                 {showcourses && <SimpleGrid columns={{sm: 1, md: 2, lg: 3}} w={["90%", "90%", "80%", "50%"]} spacing={3}>
                     {renderCourses()}
                 </SimpleGrid>}

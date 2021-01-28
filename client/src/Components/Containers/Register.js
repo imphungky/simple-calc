@@ -32,7 +32,7 @@ import {
 } from "@chakra-ui/react";
 import {Formik, Field, Form} from "formik";
 
-function Register({isLogged, invalidUser, invalidPass, invalidEmail,clearErr, register}) {
+function Register({isLogged, invalidUser, invalidPass, invalidEmail,clearErr, register, isLoaded}) {
     const[passwordview, setpasswordview] = useState(()=> false);
     // const[isLoading, setLoading] = useState(false);
     const history = useHistory();
@@ -71,11 +71,11 @@ function Register({isLogged, invalidUser, invalidPass, invalidEmail,clearErr, re
     }
 
     useEffect(() => {
-        if(isLogged) {
+        if(isLoaded && isLogged) {
             loadUser();
             history.push("/profile");
         }
-    },[isLogged, history]);
+    },[isLogged, history, isLoaded]);
 
 
 
@@ -157,6 +157,7 @@ function Register({isLogged, invalidUser, invalidPass, invalidEmail,clearErr, re
 function mapStateToProps(state) {
     return {
         isLogged: state.user.isLogged,
+        isLoaded: state.user.isLoaded,
         invalidUser: state.error.invalidUser,
         invalidPass: state.error.invalidPass,
         invalidEmail: state.error.invalidEmail

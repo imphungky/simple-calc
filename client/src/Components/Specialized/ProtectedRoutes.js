@@ -8,6 +8,7 @@ import { loadUser } from '../../Actions/userActions';
  * 
  *  Check if the user has an access Token in memory, redirect if they are not authorized
  * on a protected route
+ * 
  */
 
 

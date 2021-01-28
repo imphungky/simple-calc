@@ -76,7 +76,7 @@ function Calculator({handle, course, authAction, gradeColour}) {
             let weight = 0;
             let final = 0;
             if(checkEmptyFields(grades)) {
-                return 100;
+                return -1;
             }
             for(let i=0; i < grades.length; i++) {
                 if(grades[i][0] !== '' && grades[i][1] !== ''){
@@ -161,7 +161,7 @@ function Calculator({handle, course, authAction, gradeColour}) {
     <Box ml="3" minW="20vw" h="30vh" bg="#6ABFFD" p="5" rounded="md">
         <Heading color="white">Grade Calculated</Heading>
         <Flex alignContent="center" alignItems="center" justify="center" h="100%" w="100%">
-            {!calculatingGrade &&<Heading as="h1" size="3xl" color={gradeColour(finalgrade)} >{finalgrade + "%"}</Heading>}
+            {!calculatingGrade &&<Heading as="h1" size="3xl" color={gradeColour(finalgrade)} >{finalgrade == -1 ? 'No Grades' : finalgrade + "%"}</Heading>}
             {calculatingGrade && <Spinner />}
         </Flex>
     </Box>
