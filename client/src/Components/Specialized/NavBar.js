@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { clearErr } from "../../Actions/errorActions.js";
 import { logout } from "../../Actions/userActions.js";
 
-function ButtonAppBar({ isLogged, logout, clearErr, isLoaded }) {
+function NavBar({ isLogged, logout, clearErr, isLoaded }) {
   const history = useHistory();
 
   /*
@@ -63,7 +63,7 @@ function ButtonAppBar({ isLogged, logout, clearErr, isLoaded }) {
       {isLoaded && isLogged && (
         <Box p="2">
           <Button bg="#6ABFFD" color="white" onClick={loginHandle}>
-            Logout
+            Log Out
           </Button>{" "}
         </Box>
       )}
@@ -89,4 +89,4 @@ function mapDispatchToProps(dispatch) {
     },
   };
 }
-export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
