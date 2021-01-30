@@ -133,7 +133,13 @@ function Login({ isLogged, login, invalidUser, invalidPass, clearErr }) {
                     )}
                   </Field>
                   <Button
-                    colorScheme={props.isValid ? "green" : "gray"}
+                    colorScheme={
+                      props.values.username.length > 0 &&
+                      props.values.password.length > 0 &&
+                      props.isValid
+                        ? "green"
+                        : "gray"
+                    }
                     isLoading={props.isSubmitting}
                     rightIcon={<ArrowForwardIcon boxSize={5} />}
                     type="submit"

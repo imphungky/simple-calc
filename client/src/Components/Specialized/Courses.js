@@ -54,8 +54,8 @@ export default function Courses({ course, index, handler, gradeColour }) {
       <Box
         fontWeight="semibold"
         color={gradeColour(courseinfo.finalgrade)}
-        as="h4"
-        fontSize="3xl"
+        as="h5"
+        fontSize="2xl"
         isTruncated
         mb="10"
       >
