@@ -30,7 +30,7 @@ connection.once('open', () => {
 
 app.use(cors({
     credentials: true,
-    origin: "https://www.grade-calc.com"
+    origin: "http://localhost:3000",
 })); //middleware
 app.use(express.json()); //send and receive json files
 app.use('/users', usersRouter);
