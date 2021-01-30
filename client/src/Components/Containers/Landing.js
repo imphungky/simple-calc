@@ -1,15 +1,23 @@
-import React from "react";
 import Grid from "@material-ui/core/Grid";
+import React from "react";
+
 import Calculator from "../Specialized/Calculator.js";
 
-
 function Grades() {
-    return (
-    <Grid item container direction="column" justify="center" alignContent="center" alignItems="center" spacing={4}>
-        <Grid item>
+  return (
+    <Grid
+      item
+      container
+      direction="column"
+      justify="center"
+      alignContent="center"
+      alignItems="center"
+      spacing={4}
+    >
+      <Grid item>
         <Calculator />
-        </Grid>
+      </Grid>
     </Grid>
-    );
+  );
 }
-export default Grades
+export default Grades;

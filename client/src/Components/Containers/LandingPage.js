@@ -1,55 +1,59 @@
-import React, { useEffect } from "react";
-import {
-    Box,
-    Button,
-    Flex,
-    Heading,
-    Text,
-    SlideFade,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-  } from "@chakra-ui/react";
-import {useHistory} from "react-router-dom";
-import {connect} from "react-redux";
-
+import { Box, Button, Flex, Heading, SlideFade, Text } from "@chakra-ui/react";
+import React from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 function LandingPage() {
-    const history = useHistory();
+  const history = useHistory();
 
-    function handleGetStarted() {
-        history.push("/register");
-    }
+  function handleGetStarted() {
+    history.push("/register");
+  }
 
-    return(
+  return (
     // <Center>
     <SlideFade in>
-    <Flex direction="column" justify="center">
+      <Flex direction="column" justify="center">
         <Heading as="h1" textAlign="center" size="4xl" mt="100">
-            <Box as="span">
-            Stay on Top with <br/>
-            Grade-<Box as="span"color="#6ABFFD">calc</Box>
+          <Box as="span">
+            Stay on Top with <br />
+            Grade-
+            <Box as="span" color="#6ABFFD">
+              calc
             </Box>
+          </Box>
         </Heading>
         <Text align="center" fontSize="lg" m="3">
-            Offering an easy way to <Box as="span" color="#6ABFFD">track your courses</Box>. <br/>Simply Register, add your courses, and start tracking. 
+          Offering an easy way to{" "}
+          <Box as="span" color="#6ABFFD">
+            track your courses
+          </Box>
+          . <br />
+          Simply Register, add your courses, and start tracking.
         </Text>
         <Box as="span" align="center">
-        <Button size="lg" bg="#6ABFFD" color="white" borderRadius="md" onClick={handleGetStarted}> Get Started</Button>
+          <Button
+            size="lg"
+            bg="#6ABFFD"
+            color="white"
+            borderRadius="md"
+            onClick={handleGetStarted}
+          >
+            {" "}
+            Get Started
+          </Button>
         </Box>
-    </Flex>
-    {/* {isExpired && <Alert status="info"><AlertIcon />Your Session has Expired</Alert>} */}
+      </Flex>
+      {/* {isExpired && <Alert status="info"><AlertIcon />Your Session has Expired</Alert>} */}
     </SlideFade>
     // </Center>
-    );
-
-};
+  );
+}
 
 function mapStateToProps(state) {
-    return {
-        isLogged: state.user.isLogged,
-        isLoaded: state.user.isLoaded,
-    }
+  return {
+    isLogged: state.user.isLogged,
+    isLoaded: state.user.isLoaded,
+  };
 }
 export default connect(mapStateToProps, {})(LandingPage);

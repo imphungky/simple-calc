@@ -1,17 +1,12 @@
-import React from 'react';
-import {connect} from "react-redux";
-import { useHistory } from 'react-router-dom';
-import {logout} from "../../Actions/userActions.js";
-import {clearErr} from "../../Actions/errorActions.js";
-import {
-  Box,
-  Button,
-  Flex,
-  Heading,
-  Spacer
-} from "@chakra-ui/react";
+import { Box, Button, Flex, Heading, Spacer } from "@chakra-ui/react";
+import React from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
 
-function ButtonAppBar({isLogged, logout, clearErr, isLoaded}) {
+import { clearErr } from "../../Actions/errorActions.js";
+import { logout } from "../../Actions/userActions.js";
+
+function ButtonAppBar({ isLogged, logout, clearErr, isLoaded }) {
   const history = useHistory();
 
   /*
@@ -20,17 +15,16 @@ function ButtonAppBar({isLogged, logout, clearErr, isLoaded}) {
   redirect to login page
   */
   async function loginHandle() {
-      clearErr();
-      if(!isLogged) {
-          history.push("/login");
-      }
-      else {
-          logout();
-      }
+    clearErr();
+    if (!isLogged) {
+      history.push("/login");
+    } else {
+      logout();
+    }
   }
 
   function logoHandle() {
-    if(!isLogged) {
+    if (!isLogged) {
       history.push("/");
     }
   }
@@ -43,48 +37,56 @@ function ButtonAppBar({isLogged, logout, clearErr, isLoaded}) {
     history.push("/register");
   }
 
-
-
   return (
-      <Flex>
-        <Box p="2">
-          <Button variant="ghost" onClick={logoHandle}>
+    <Flex>
+      <Box p="2">
+        <Button variant="ghost" onClick={logoHandle}>
           <Heading>
-            Grade-<Box as="span" color="#6ABFFD">calc</Box>
+            Grade-
+            <Box as="span" color="#6ABFFD">
+              calc
+            </Box>
           </Heading>
-          </Button>
-        </Box>
-          <Spacer />
-        {isLoaded && !isLogged && <Box p="2">
+        </Button>
+      </Box>
+      <Spacer />
+      {isLoaded && !isLogged && (
+        <Box p="2">
           <Button colorScheme="red" mr="4" onClick={registerHandle}>
             Sign Up
           </Button>
           <Button bg="#6ABFFD" color="white" onClick={loginHandle}>
             Log in
           </Button>
-        </Box>}
-        {isLoaded && isLogged && <Box p="2"><Button bg="#6ABFFD" color="white" onClick={loginHandle}>Logout</Button> </Box>}
-      </Flex>
+        </Box>
+      )}
+      {isLoaded && isLogged && (
+        <Box p="2">
+          <Button bg="#6ABFFD" color="white" onClick={loginHandle}>
+            Logout
+          </Button>{" "}
+        </Box>
+      )}
+    </Flex>
   );
 }
 
 function mapStateToProps(state) {
-    return {
-      isLogged: state.user.isLogged,
-      isLoading: state.user.isLoading,
-      isLoaded: state.user.isLoaded
-    };
+  return {
+    isLogged: state.user.isLogged,
+    isLoading: state.user.isLoading,
+    isLoaded: state.user.isLoaded,
+  };
 }
 
-
 function mapDispatchToProps(dispatch) {
-    return {
-        logout: () => {
-            dispatch(logout());
-        },
-        clearErr: () => {
-          dispatch(clearErr());
-        }
-    };
+  return {
+    logout: () => {
+      dispatch(logout());
+    },
+    clearErr: () => {
+      dispatch(clearErr());
+    },
+  };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ButtonAppBar);
