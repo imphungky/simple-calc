@@ -17,11 +17,12 @@ import { useHistory } from "react-router-dom";
 import authAction from "../../Actions/authActions";
 import { addCourse, deleteCourse } from "../../Actions/courseActions.js";
 import { expiredSession } from "../../Actions/userActions.js";
-import AddCourse from "../Specialized/AddCourse.js";
+import AddCourse from "../Specialized/addCourse.js";
 import Calculator from "../Specialized/Calculator.js";
 import Courses from "../Specialized/Courses.js";
 
 function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
+  const [showcourseanimation, setshowcourseanimation] = useState(() => true);
   const [displaycourses, setCourses] = useState([]);
   const [modifycourse, setmodify] = useState();
   const [showcourses, setshowcourses] = useState(() => true);
@@ -34,6 +35,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
 
 
     */
+
   function redirect(e, type) {
     //set our current state to which distinct course the user wants to edit
     if (type === "MODIFY") {
@@ -52,9 +54,9 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
     else if (type === "ADD") {
       let info = {
         grades: [
-          ["", ""],
-          ["", ""],
-          ["", ""],
+          [true, "", "", ""],
+          [true, "", "", ""],
+          [true, "", "", ""],
         ],
         coursename: e.currentTarget.value,
         finalgrade: -1,
@@ -87,6 +89,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
         // display.push( <Grid item key={"Grid" + i} m={6} lg={4}><Courses handler={redirect} key={i} index={i} course={displaycourses[i]}/></Grid>);
         display.push(
           <Courses
+            animationprop={showcourseanimation}
             handler={redirect}
             key={i}
             index={i}
@@ -96,7 +99,9 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
         );
       }
     }
-    display.push(<AddCourse handler={redirect} />);
+    display.push(
+      <AddCourse handler={redirect} animationprop={showcourseanimation} />
+    );
     return display;
   }
 
@@ -130,8 +135,19 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
       {isLoaded && (
         <Tabs variant="soft-rounded" colorScheme="blue" align="center" p="5">
           <TabList>
-            <Tab onClick={() => setshowcourses(true)}>Courses</Tab>
-            <Tab>
+            <Tab
+              onClick={() => {
+                setshowcourses(true);
+                setshowcourseanimation(true);
+              }}
+            >
+              Courses
+            </Tab>
+            <Tab
+              onClick={() => {
+                setshowcourseanimation(false);
+              }}
+            >
               Overview{" "}
               <Badge ml="2" variant="subtle" colorScheme="yellow">
                 Coming Soon
