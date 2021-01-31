@@ -12,11 +12,12 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Button
+  Button,
+  SlideFade
 } from "@chakra-ui/react";
 
 
-export default function Courses({course, index, handler, gradeColour}) {
+export default function Courses({course, index, handler, gradeColour, animationprop}) {
 
   const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -35,6 +36,7 @@ export default function Courses({course, index, handler, gradeColour}) {
   }, [course]);
 
   return (
+    <SlideFade in={animationprop} unmountOnExit={false}>
     <Flex justify="center" alignItems="center" value={index} bg="#6ABFFD" direction="column"  rounded="md" p="8">
       {/* <Flex justify="center"direction="column" alignItems="center" borderRadius={4}> */}
         <Box fontWeight="semibold" color="white" as="h4" fontSize={"4xl"} maxW={["25vw","25vw","15vw"]} isTruncated mb="2">
@@ -62,6 +64,7 @@ export default function Courses({course, index, handler, gradeColour}) {
         </ModalContent>
       </Modal>
     </Flex>
+    </SlideFade>
   );
 
 }

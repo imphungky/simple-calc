@@ -14,16 +14,18 @@ import {
     Modal,
     ModalOverlay,
     ModalContent,
+    ModalBody,
     ModalHeader,
     ModalFooter,
     ModalCloseButton,
     useDisclosure,
     SlideFade,
-    Spinner
+    Spinner,
+    Checkbox
 } from "@chakra-ui/react";
 function Calculator({handle, course, authAction, gradeColour}) {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const [modifygrades, setmodify] = useState(() => course ? course.grades : [['', ''], ['', ''], ['', '']]);
+    const [modifygrades, setmodify] = useState(() => course ? course.grades : [[true, '','', ''], [true, '', '', ''], [true, '', '', '']]);
     const [showfinal, setshowfinal] = useState(false);
     const [finalgrade, setfinalgrade] = useState(() => course ? course.finalgrade : 0);
     const [calculatingGrade, setSpinner] = useState(false);
@@ -79,9 +81,9 @@ function Calculator({handle, course, authAction, gradeColour}) {
                 return -1;
             }
             for(let i=0; i < grades.length; i++) {
-                if(grades[i][0] !== '' && grades[i][1] !== ''){
-                    grade += grades[i][0] * (grades[i][1]) / 100;
-                    weight += grades[i][1] / 100;
+                if(grades[i][0] && grades[i][2] !== '' && grades[i][3] !== ''){
+                    grade += grades[i][2] * (grades[i][3]) / 100;
+                    weight += grades[i][3] / 100;
                 }
             }
             if(weight > 0) {
@@ -100,18 +102,28 @@ function Calculator({handle, course, authAction, gradeColour}) {
 
 
     function inputHandle(e) {
-        setSpinner(true);
         setmodify(prev_grades => {
             const lst = [...prev_grades];
-            lst[e.target.id][e.target.name] = e.target.value;
-            calculate(lst);
+            if(e.target.name == 0) {
+                lst[e.target.id][e.target.name] = e.target.checked;
+            }
+            else{
+                lst[e.target.id][e.target.name] = e.target.value;
+                if(e.target.name == 1) {
+                    return lst;
+                }
+            }
+            if(lst[e.target.id][0]) {
+                setSpinner(true);
+                calculate(lst);
+            }
             return lst;
         });
         setTimeout(() => {setSpinner(false)}, 200);
     }
 
     function addgrade() {
-        setmodify(prev_grades => {return [...prev_grades, ['','']]});
+        setmodify(prev_grades => {return [...prev_grades, [true, '','','']]});
     }
 
 
@@ -121,8 +133,10 @@ function Calculator({handle, course, authAction, gradeColour}) {
             for(var i=0; i < modifygrades.length; i++) {
                 display.push(
                 <Flex>
-                    <Input bg="white" m="2" id={i.toString()} name={"0"} onChange={(e) => inputHandle(e)} value={modifygrades[i][0]} key={"GradeField"+ i} placeholder="Grade"></Input>
-                    <Input bg="white" m="2" id={i.toString()} name={"1"} onChange={(e) => inputHandle(e)} value={modifygrades[i][1]} key={"WeightField"+ i} placeholder="Weight"></Input>
+                    <Checkbox isChecked={modifygrades[i][0]} m="1" id={i.toString()} name={"0"} onChange={(e) => inputHandle(e)}/>
+                    <Input bg="white" m="2" id={i.toString()} name={"1"} onChange={(e) => inputHandle(e)} value={modifygrades[i][1]} key={"NameField"+ i} placeholder="Assessment Name"></Input>
+                    <Input bg="white" m="2" id={i.toString()} name={"2"} onChange={(e) => inputHandle(e)} value={modifygrades[i][2]} key={"GradeField"+ i} placeholder="Grade"></Input>
+                    <Input bg="white" m="2" id={i.toString()} name={"3"} onChange={(e) => inputHandle(e)} value={modifygrades[i][3]} key={"WeightField"+ i} placeholder="Weight"></Input>
                     <IconButton m="2" onClick={(e) => removegradehandle(e)} id={i.toString()} icon={<DeleteIcon />} key={"RemoveGrade" + i}></IconButton>
                 </Flex>
                 );
@@ -145,7 +159,10 @@ function Calculator({handle, course, authAction, gradeColour}) {
         <Modal isCentered isOpen={isOpen} onClose={onClose} initialFocusRef={initialRef}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Fields for this grade are not empty</ModalHeader>
+          <ModalHeader>Remove Assessment</ModalHeader>
+          <ModalBody>
+          Fields are filled in, continue?
+          </ModalBody>
           <ModalCloseButton />
           <ModalFooter>
             <Button  mr={3} onClick={onClose}>
@@ -159,9 +176,9 @@ function Calculator({handle, course, authAction, gradeColour}) {
     </SlideFade>
     <SlideFade in offsetX="-20px">
     <Box ml="3" minW="20vw" h="30vh" bg="#6ABFFD" p="5" rounded="md">
-        <Heading color="white">Grade Calculated</Heading>
+        <Heading color="white">Calculated Grade</Heading>
         <Flex alignContent="center" alignItems="center" justify="center" h="100%" w="100%">
-            {!calculatingGrade &&<Heading as="h1" size="3xl" color={gradeColour(finalgrade)} >{finalgrade == -1 ? 'No Grades' : finalgrade + "%"}</Heading>}
+            {!calculatingGrade &&<Heading as="h1" size={finalgrade == -1 ? 'xl' : '3xl'} color={gradeColour(finalgrade)} >{finalgrade == -1 ? 'No Grades' : finalgrade + "%"}</Heading>}
             {calculatingGrade && <Spinner />}
         </Flex>
     </Box>

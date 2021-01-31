@@ -26,7 +26,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
     const [displaycourses, setCourses] = useState([]);
     const [modifycourse, setmodify] = useState();
     const [showcourses, setshowcourses] = useState(() => true);
-
+    const [showcourseanimation, setshowcourseanimation] = useState(() => true);
     const history = useHistory();
     /*
 
@@ -52,7 +52,7 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
         //add a new course and dispatch the action to add it to the database
         else if(type === "ADD") {
            let info = {
-               grades: [["", ""], ["", ""], ["", ""]],
+               grades: [[true, "", "", ""], [true, "", "", ""], [true, "", "", ""]],
                coursename: e.currentTarget.value,
                finalgrade: -1,
            }
@@ -86,10 +86,10 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
         if(displaycourses.length > 0) {
             for(var i = 0; i < displaycourses.length; i++) {
                 // display.push( <Grid item key={"Grid" + i} m={6} lg={4}><Courses handler={redirect} key={i} index={i} course={displaycourses[i]}/></Grid>);
-                display.push(<Courses handler={redirect} key={i} index={i} course={displaycourses[i]} gradeColour={gradeColour} />)
+                display.push(<Courses animationprop={showcourseanimation} handler={redirect} key={i} index={i} course={displaycourses[i]} gradeColour={gradeColour} />)
             }
         }
-        display.push(<AddCourse handler={redirect}/>);
+        display.push(<AddCourse animationprop={showcourseanimation} handler={redirect}/>);
         return display;
     }
     
@@ -115,10 +115,10 @@ function Profile({grades, verified, authAction,isLoaded, isLogged, expiredSessio
     <Box aligntItems="center" alignContent="center" justify="center" mt="15" w="100%" h="100%">
         {isLoaded && <Tabs variant="soft-rounded" colorScheme="blue" align="center" p="5">
             <TabList>
-                <Tab onClick={() => setshowcourses(true)}>
+                <Tab onClick={() => {setshowcourses(true); setshowcourseanimation(true);}}>
                     Courses
                 </Tab>
-                <Tab>
+                <Tab onClick={() => {setshowcourseanimation(false);}}>
                     Overview <Badge ml="2" variant="subtle" colorScheme="yellow" >Coming Soon</Badge>
                 </Tab>
             </TabList>
