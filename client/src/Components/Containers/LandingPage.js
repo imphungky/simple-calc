@@ -16,7 +16,7 @@ function LandingPage() {
       <Flex direction="column" justify="center">
         <Heading as="h1" textAlign="center" size="4xl" mt="100">
           <Box as="span">
-            Stay on Top with <br />
+            Stay on top with <br />
             Grade-
             <Box as="span" color="#6ABFFD">
               calc
@@ -29,7 +29,7 @@ function LandingPage() {
             track your courses
           </Box>
           . <br />
-          Simply Register, add your courses, and start tracking.
+          Register, add your courses, and start tracking - it&apos;s that easy!
         </Text>
         <Box as="span" align="center">
           <Button

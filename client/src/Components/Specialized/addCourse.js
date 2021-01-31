@@ -13,6 +13,7 @@ export default function AddCourse({ handler }) {
       borderRadius={4}
       rounded="md"
       p="8"
+      minH="12vw"
     >
       <Box
         fontWeight="semibold"

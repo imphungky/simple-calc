@@ -52,7 +52,7 @@ function NavBar({ isLogged, logout, clearErr, isLoaded }) {
       <Spacer />
       {isLoaded && !isLogged && (
         <Box p="2">
-          <Button colorScheme="red" mr="4" onClick={registerHandle}>
+          <Button bg="#3ca46c" color="white" mr="4" onClick={registerHandle}>
             Sign Up
           </Button>
           <Button bg="#6ABFFD" color="white" onClick={loginHandle}>

@@ -17,7 +17,7 @@ import { useHistory } from "react-router-dom";
 import authAction from "../../Actions/authActions";
 import { addCourse, deleteCourse } from "../../Actions/courseActions.js";
 import { expiredSession } from "../../Actions/userActions.js";
-import AddCourse from "../Specialized/addCourse.js";
+import AddCourse from "../Specialized/AddCourse.js";
 import Calculator from "../Specialized/Calculator.js";
 import Courses from "../Specialized/Courses.js";
 
