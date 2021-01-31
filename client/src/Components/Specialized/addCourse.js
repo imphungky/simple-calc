@@ -1,7 +1,7 @@
 import { Box, Flex, SlideFade } from "@chakra-ui/react";
 import React from "react";
 
-import AddCourseButton from "./addCourseModal.js";
+import AddCourseButton from "./AddCourseModal.js";
 
 export default function AddCourse({ handler, animationprop }) {
   return (
