@@ -1,14 +1,15 @@
-  
 const jwt = require("jsonwebtoken");
-
 
 async function genToken(username) {
   try {
-    const accessToken = jwt.sign({username: username}, "secret", {expiresIn: '5m'});
-    const refreshToken = jwt.sign({username: username}, "secret", {expiresIn: '7d'});
+    const accessToken = jwt.sign({ username: username }, "secret", {
+      expiresIn: "5m",
+    });
+    const refreshToken = jwt.sign({ username: username }, "secret", {
+      expiresIn: "7d",
+    });
     return Promise.all([accessToken, refreshToken]);
-  }
-  catch (err) {
+  } catch (err) {
     return "Error";
   }
 }
@@ -31,9 +32,9 @@ async function auth(req, res, next) {
     // use refresh token to try again
     res.status(401).json({ msg: "Token is not valid" });
   }
-  }
+}
 
 module.exports = {
   genToken: genToken,
-  auth: auth
+  auth: auth,
 };

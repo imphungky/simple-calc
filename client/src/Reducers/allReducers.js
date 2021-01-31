@@ -1,9 +1,10 @@
-import userReducer from "./userReducer";
+import { combineReducers } from "redux";
+
 import errReducers from "./errorReducers";
-import {combineReducers} from "redux";
+import userReducer from "./userReducer";
 const allReducers = combineReducers({
-    error: errReducers,
-    user: userReducer
+  error: errReducers,
+  user: userReducer,
 });
 
 export default allReducers;
