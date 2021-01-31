@@ -1,4 +1,3 @@
-
 import axiosConfig from "./axiosConfig";
 
 /**
@@ -6,7 +5,7 @@ import axiosConfig from "./axiosConfig";
  * to the server
  */
 
-const setAuthToken = token => {
+const setAuthToken = (token) => {
   if (token) {
     axiosConfig.defaults.headers.common["x-auth-token"] = token;
   } else {
