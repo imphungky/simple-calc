@@ -97,7 +97,11 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
       }
     }
     display.push(
-      <AddCourse handler={redirect} animationprop={showcourseanimation} />
+      <AddCourse
+        key="add-course"
+        handler={redirect}
+        animationprop={showcourseanimation}
+      />
     );
     return display;
   }

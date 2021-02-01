@@ -1,6 +1,10 @@
 import {
   Badge,
+  Editable,
+  EditableInput,
+  EditablePreview,
   HStack,
+  IconButton,
   Table,
   Tbody,
   Td,
@@ -10,38 +14,125 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
-import { AiFillInfoCircle } from "react-icons/ai";
+import { Field, Formik } from "formik";
+import React, { useState } from "react";
+import { AiFillInfoCircle, AiOutlinePlus } from "react-icons/ai";
 import { BsBook } from "react-icons/bs";
 import { FaTag } from "react-icons/fa";
 import { GrStatusUnknown } from "react-icons/gr";
 import { IoTextOutline } from "react-icons/io5";
+import * as Yup from "yup";
+
+const TaskSchema = Yup.object().shape({
+  name: Yup.string().max(60, "Task name is too long!"),
+  status: Yup.object().shape({
+    name: Yup.string(),
+    color: Yup.string(),
+  }),
+  course: Yup.string(),
+  tags: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string(),
+      color: Yup.string(),
+    })
+  ),
+});
 
 function Task({ task }) {
+  const fields = {
+    name: `name-${task._id}`,
+    status: `status-${task._id}`,
+    course: `course-${task._id}`,
+    tags: `tags-${task._id}`,
+    description: `description-${task._id}`,
+  };
   return (
-    <Tr>
-      <Td>{task.name}</Td>
-      <Td>
-        <Badge colorScheme={task.status.color}>{task.status.name}</Badge>
-      </Td>
-      <Td>{task.course}</Td>
-      <Td>
-        {task.tags.map((tag, index) => {
-          return (
-            <Badge key={index} colorScheme={tag.color}>
-              {tag.name}
-            </Badge>
-          );
-        })}
-      </Td>
-      <Td>{task.description}</Td>
-    </Tr>
+    <Formik
+      initialValues={{
+        [fields.name]: task.name,
+        [fields.status]: task.status,
+        [fields.course]: task.course,
+        [fields.tags]: task.tags,
+        [fields.description]: task.description,
+      }}
+      validationSchema={TaskSchema}
+    >
+      <Tr>
+        <Td>
+          <Field name={fields.name}>
+            {({ field, form }) => (
+              <Editable
+                placeholder="Name"
+                value={field.value}
+                onChange={(nextValue) => {
+                  if (nextValue.length <= 60) {
+                    form.setFieldValue(fields.name, nextValue);
+                  }
+                }}
+              >
+                <EditablePreview w="12vw" />
+                <EditableInput w="12vw" />
+              </Editable>
+            )}
+          </Field>
+        </Td>
+        <Td>
+          {task.status ? (
+            <Badge colorScheme={task.status.color}>{task.status.name}</Badge>
+          ) : null}
+        </Td>
+        <Td>{task.course}</Td>
+        <Td>
+          {task.tags.map((tag, index) => {
+            return (
+              <Badge key={index} colorScheme={tag.color}>
+                {tag.name}
+              </Badge>
+            );
+          })}
+        </Td>
+        <Td>
+          <Field name={fields.description}>
+            {({ field, form }) => (
+              <Editable
+                placeholder="Description"
+                value={field.value}
+                onChange={(nextValue) => {
+                  if (nextValue.length <= 120) {
+                    form.setFieldValue(fields.description, nextValue);
+                  }
+                }}
+              >
+                <EditablePreview w="12vw" />
+                <EditableInput w="12vw" />
+              </Editable>
+            )}
+          </Field>
+        </Td>
+      </Tr>
+    </Formik>
   );
 }
 
 function TaskTable({ tasks }) {
+  const [userTasks, setUserTasks] = useState(tasks);
+
+  const handleAddition = () => {
+    setUserTasks([
+      ...userTasks,
+      {
+        _id: userTasks.length + 1,
+        name: "",
+        course: "",
+        status: null,
+        tags: [],
+        description: "",
+      },
+    ]);
+  };
+
   return (
-    <Table variant="simple">
+    <Table variant="simple" w="60%">
       <Thead>
         <Tr>
           <Th>
@@ -72,13 +163,20 @@ function TaskTable({ tasks }) {
         </Tr>
       </Thead>
       <Tbody>
-        {tasks.map((task, index) => {
+        {userTasks.map((task, index) => {
           return <Task key={index} task={task} />;
         })}
       </Tbody>
       <Tfoot>
         <Tr>
-          <Th>+</Th>
+          <Th>
+            <IconButton
+              aria-label="Add task"
+              icon={<AiOutlinePlus />}
+              variant="ghost"
+              onClick={handleAddition}
+            />
+          </Th>
         </Tr>
       </Tfoot>
     </Table>
