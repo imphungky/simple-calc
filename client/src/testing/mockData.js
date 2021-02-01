@@ -1,26 +1,43 @@
 export const tasks = [
   {
-    name: "A1",
-    statuses: "to do",
-    tags: ["grade-calc", "wv", "csc301"],
-    description: "Start CSC301 A1",
+    name: "setup repo",
+    course: "csc301",
+    status: {
+      name: "to do",
+      color: "red",
+    },
+    tags: [{ name: "a1", color: "yellow" }],
+    description:
+      "Create Github repo with starter code + add partner as collaborator",
   },
   {
-    name: "WVAnonBot",
-    statuses: "doing",
-    tags: ["wv"],
-    description: "",
+    name: "writeup",
+    course: "csc301",
+    status: {
+      name: "doing",
+      color: "yellow",
+    },
+    tags: [{ name: "a1", color: "yellow" }],
+    description: "write report for problem solutions",
   },
   {
-    name: "A3",
-    statuses: "done",
-    tags: ["csc301"],
-    description: "",
+    name: "study for unit test",
+    course: "mat232",
+    status: {
+      name: "done",
+      color: "green",
+    },
+    tags: [{ name: "study", color: "red" }],
+    description: "ch3, ch4, ch5",
   },
   {
-    name: "A1",
-    statuses: "to do",
-    tags: ["csc343"],
-    description: "",
+    name: "hate speech filter",
+    course: null,
+    status: {
+      name: "to do",
+      color: "red",
+    },
+    tags: [{ name: "wv", color: "gray" }],
+    description: "implement issue #23",
   },
 ];

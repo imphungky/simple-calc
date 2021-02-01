@@ -73,12 +73,10 @@ function Calculator({ handle, course, authAction, gradeColour }) {
 
   function checkEmptyFields(grades) {
     let validgrades = grades.filter((lst) => lst[0] === true);
-    console.log(validgrades);
     let emptyfields = validgrades.map((lst) =>
       lst.slice(2).filter((field) => field !== "")
     );
     if (emptyfields.filter((lst) => lst.length > 1).length == 0) {
-      console.log(true);
       return true;
     }
     return false;
@@ -137,7 +135,6 @@ function Calculator({ handle, course, authAction, gradeColour }) {
     let display = [];
     if (modifygrades !== undefined) {
       for (var i = 0; i < modifygrades.length; i++) {
-        console.log("grades");
         display.push(
           <Flex>
             <Checkbox

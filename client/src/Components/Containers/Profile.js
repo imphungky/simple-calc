@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Flex,
   SimpleGrid,
@@ -17,9 +16,11 @@ import { useHistory } from "react-router-dom";
 import authAction from "../../Actions/authActions";
 import { addCourse, deleteCourse } from "../../Actions/courseActions.js";
 import { expiredSession } from "../../Actions/userActions.js";
-import AddCourse from "../Specialized/addCourse.js";
+import { tasks } from "../../Testing/mockData";
+import AddCourse from "../Specialized/AddCourse.js";
 import Calculator from "../Specialized/Calculator.js";
 import Courses from "../Specialized/Courses.js";
+import TaskTable from "../Specialized/TaskTable.js";
 
 function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
   const [showcourseanimation, setshowcourseanimation] = useState(() => true);
@@ -29,12 +30,9 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
 
   const history = useHistory();
   /*
-
     All button handlers get handled in this function and pass in a type
     to differentiate the different buttons that were activated to know what action to handle
-
-
-    */
+  */
 
   function redirect(e, type) {
     //set our current state to which distinct course the user wants to edit
@@ -86,7 +84,6 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
     let display = [];
     if (displaycourses.length > 0) {
       for (var i = 0; i < displaycourses.length; i++) {
-        // display.push( <Grid item key={"Grid" + i} m={6} lg={4}><Courses handler={redirect} key={i} index={i} course={displaycourses[i]}/></Grid>);
         display.push(
           <Courses
             animationprop={showcourseanimation}
@@ -107,7 +104,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
 
   /*
     If the user is already authorized/loggedin redirect them outside
-    */
+  */
 
   useEffect(() => {
     if (isLoaded) {
@@ -125,7 +122,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
 
   return (
     <Box
-      aligntItems="center"
+      alignItems="center"
       alignContent="center"
       justify="center"
       mt="15"
@@ -149,9 +146,6 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
               }}
             >
               Overview{" "}
-              <Badge ml="2" variant="subtle" colorScheme="yellow">
-                Coming Soon
-              </Badge>
             </Tab>
           </TabList>
           <TabPanels>
@@ -177,7 +171,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
               </Flex>
             </TabPanel>
             <TabPanel>
-              <p>Coming Soon!</p>
+              <TaskTable tasks={tasks} />
             </TabPanel>
           </TabPanels>
         </Tabs>
