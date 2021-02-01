@@ -1,3 +1,4 @@
+import { DeleteIcon } from "@chakra-ui/icons";
 import {
   Badge,
   Editable,
@@ -38,7 +39,7 @@ const TaskSchema = Yup.object().shape({
   ),
 });
 
-function Task({ task }) {
+function Task({ task, handleDeletion }) {
   const fields = {
     name: `name-${task._id}`,
     status: `status-${task._id}`,
@@ -92,22 +93,30 @@ function Task({ task }) {
           })}
         </Td>
         <Td>
-          <Field name={fields.description}>
-            {({ field, form }) => (
-              <Editable
-                placeholder="Description"
-                value={field.value}
-                onChange={(nextValue) => {
-                  if (nextValue.length <= 120) {
-                    form.setFieldValue(fields.description, nextValue);
-                  }
-                }}
-              >
-                <EditablePreview w="12vw" />
-                <EditableInput w="12vw" />
-              </Editable>
-            )}
-          </Field>
+          <HStack>
+            <Field name={fields.description}>
+              {({ field, form }) => (
+                <Editable
+                  placeholder="Description"
+                  value={field.value}
+                  onChange={(nextValue) => {
+                    if (nextValue.length <= 120) {
+                      form.setFieldValue(fields.description, nextValue);
+                    }
+                  }}
+                >
+                  <EditablePreview w="12vw" />
+                  <EditableInput w="12vw" />
+                </Editable>
+              )}
+            </Field>
+            <IconButton
+              aria-label="Delete task"
+              icon={<DeleteIcon />}
+              variant="ghost"
+              onClick={() => handleDeletion(task._id)}
+            />
+          </HStack>
         </Td>
       </Tr>
     </Formik>
@@ -129,6 +138,11 @@ function TaskTable({ tasks }) {
         description: "",
       },
     ]);
+  };
+
+  const handleDeletion = (id) => {
+    const newTasks = userTasks.filter((task) => task._id !== id);
+    setUserTasks(newTasks);
   };
 
   return (
@@ -164,7 +178,9 @@ function TaskTable({ tasks }) {
       </Thead>
       <Tbody>
         {userTasks.map((task, index) => {
-          return <Task key={index} task={task} />;
+          return (
+            <Task key={index} task={task} handleDeletion={handleDeletion} />
+          );
         })}
       </Tbody>
       <Tfoot>
