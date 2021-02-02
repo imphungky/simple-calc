@@ -6,6 +6,7 @@ import {
   EditablePreview,
   HStack,
   IconButton,
+  Select,
   Table,
   Tbody,
   Td,
@@ -39,7 +40,7 @@ const TaskSchema = Yup.object().shape({
   ),
 });
 
-function Task({ task, handleDeletion }) {
+function Task({ task, courses, handleDeletion }) {
   const fields = {
     name: `name-${task._id}`,
     status: `status-${task._id}`,
@@ -82,7 +83,21 @@ function Task({ task, handleDeletion }) {
             <Badge colorScheme={task.status.color}>{task.status.name}</Badge>
           ) : null}
         </Td>
-        <Td>{task.course}</Td>
+        <Td>
+          <Select
+            variant="unstyled"
+            placeholder="Select Course"
+            value={task.course ? task.course : "None"}
+          >
+            {courses.map((course, index) => {
+              return (
+                <option key={index} value={course}>
+                  {course}
+                </option>
+              );
+            })}
+          </Select>
+        </Td>
         <Td>
           {task.tags.map((tag, index) => {
             return (
@@ -179,7 +194,12 @@ function TaskTable({ tasks }) {
       <Tbody>
         {userTasks.map((task, index) => {
           return (
-            <Task key={index} task={task} handleDeletion={handleDeletion} />
+            <Task
+              key={index}
+              task={task}
+              courses={["csc301", "csc343", "csc373", "mat232", "None"]}
+              handleDeletion={handleDeletion}
+            />
           );
         })}
       </Tbody>
