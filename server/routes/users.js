@@ -146,4 +146,55 @@ router.route("/clearcookie").delete(async (req, res) => {
   res.status(200).send("cookie cleared");
 });
 
+router.route("/addtask").post(async (req, res) => {
+  console.log("here");
+  let username = req.body.username;
+  User.findOne({username: username})
+  .then((user) => {
+    console.log(user);
+    user.tasks.push(req.body.task);
+    user.save()
+    .then(() => {
+      res.status(200).json('Task added');
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  })
+});
+
+router.route("/updatetask").post(async (req, res) => {
+  let username = req.body.username;
+  User.findOne({username: username})
+  .then(async (user) => {
+    let tasks = user.tasks.id(req.body.id);
+    user.tasks.id(req.body.id).set({...tasks, ...req.body.newfields});
+    user.save()
+    .then(() => {
+      return res.status(200).json('task updated!');
+    })
+  })
+  .catch((err) => {
+    console.log(err);
+    return res.status(403).json(err);
+  })
+});
+
+router.route("/removetask").delete(async (req, res) => {
+  let username = req.body.username;
+  User.findOne({username: username})
+  .then((user) => {
+    user.tasks.id(req.body.id).remove();
+    user.save()
+    .then(() => {
+      return res.status(200);
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  })
+});
+
+
+
 module.exports = router;

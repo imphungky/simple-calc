@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const { tagSchema, taskSchema } = require("./tasks.model.js");
 const userSchema = new mongoose.Schema(
   {
     username: {
@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema(
       trim: true,
       minlength: 5,
     },
+    statuses: [tagSchema],
+    tasks: [taskSchema],
     password: {
       type: String,
       required: true,

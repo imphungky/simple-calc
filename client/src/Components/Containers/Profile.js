@@ -28,7 +28,7 @@ function Profile({ grades, verified, authAction, isLoaded, isLogged }) {
   const [showcourses, setshowcourses] = useState(() => true);
 
   const history = useHistory();
-  /*
+  /*git 
 
     All button handlers get handled in this function and pass in a type
     to differentiate the different buttons that were activated to know what action to handle

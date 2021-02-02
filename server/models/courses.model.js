@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const {taskSchema} = require("./tasks.model.js");
 const courseSchema = mongoose.Schema(
   {
     username: { type: String, required: true, unique: false },
