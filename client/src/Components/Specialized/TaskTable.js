@@ -6,7 +6,6 @@ import {
   EditablePreview,
   HStack,
   IconButton,
-  Select,
   Table,
   Tbody,
   Td,
@@ -24,6 +23,8 @@ import { FaTag } from "react-icons/fa";
 import { GrStatusUnknown } from "react-icons/gr";
 import { IoTextOutline } from "react-icons/io5";
 import * as Yup from "yup";
+
+import Autocomplete from "./Autocomplete";
 
 const TaskSchema = Yup.object().shape({
   name: Yup.string().max(60, "Task name is too long!"),
@@ -84,19 +85,19 @@ function Task({ task, courses, handleDeletion }) {
           ) : null}
         </Td>
         <Td>
-          <Select
-            variant="unstyled"
-            placeholder="Select Course"
-            value={task.course ? task.course : "None"}
-          >
-            {courses.map((course, index) => {
-              return (
-                <option key={index} value={course}>
-                  {course}
-                </option>
-              );
-            })}
-          </Select>
+          <Field name={fields.course}>
+            {({ field, form }) => (
+              <Autocomplete
+                listId={fields.course}
+                options={courses}
+                setValue={(val) => {
+                  form.setFieldValue(fields.course, val);
+                }}
+                placeholder="Select Course"
+                value={field.value}
+              />
+            )}
+          </Field>
         </Td>
         <Td>
           {task.tags.map((tag, index) => {
@@ -197,7 +198,7 @@ function TaskTable({ tasks }) {
             <Task
               key={index}
               task={task}
-              courses={["csc301", "csc343", "csc373", "mat232", "None"]}
+              courses={["csc301", "csc343", "csc373", "mat232"]}
               handleDeletion={handleDeletion}
             />
           );
