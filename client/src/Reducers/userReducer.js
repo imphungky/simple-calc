@@ -1,6 +1,8 @@
 const initialState = {
   isLogged: false,
   grades: [],
+  tasks: [],
+  statuses: [],
   verified: false,
   isLoading: false,
   isLoaded: false,
@@ -35,6 +37,7 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
       };
     case "USER_LOADED":
+      console.log(action.payload.tasks);
       return {
         ...state,
         isLogged: true,
@@ -42,6 +45,7 @@ const userReducer = (state = initialState, action) => {
         isLoading: false,
         grades: action.payload.courses,
         verified: action.payload.verified,
+        tasks: action.payload.tasks,
       };
     case "EMAIL_SENT":
       return {
@@ -83,6 +87,16 @@ const userReducer = (state = initialState, action) => {
       return {
         ...state,
         isLogged: false,
+      };
+    case "TASK":
+      return {
+        ...state,
+        tasks: action.payload,
+      };
+    case "STATUS":
+      return {
+        ...state,
+        statuses: action.payload,
       };
     default:
       return state;

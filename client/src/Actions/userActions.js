@@ -126,18 +126,27 @@ export const logout = () => async (dispatch) => {
  */
 
 export const loadUser = () => async (dispatch) => {
-  let url = "/courses/fetch";
-  axiosConfig
-    .get(url, { withCredentials: true })
-    .then((courses) => {
-      console.log(courses.data);
-      url = "/users/loadverify";
-      axiosConfig.get(url).then((verified) => {
-        console.log(courses.data);
-        dispatch({
-          type: "USER_LOADED",
-          payload: { courses: courses.data, verified: verified.data },
-        });
+  let promise1 = axiosConfig.get("/courses/fetch", { withCredentials: true });
+  let promise2 = axiosConfig.get("/users/loadverify", {
+    withCredentials: true,
+  });
+  let promise3 = axiosConfig.get("/users/fetchtasks", {
+    withCredentials: true,
+  });
+  let promise4 = axiosConfig.get("/users/fetchstatuses", {
+    withCredentials: true,
+  });
+  Promise.all([promise1, promise2, promise3, promise4])
+    .then((responses) => {
+      console.log("loaded");
+      dispatch({
+        type: "USER_LOADED",
+        payload: {
+          courses: responses[0].data,
+          verified: responses[1].data,
+          tasks: responses[2].data.tasks,
+          statuses: responses[3].data.statuses,
+        },
       });
     })
     .catch(() => {
@@ -145,4 +154,76 @@ export const loadUser = () => async (dispatch) => {
         type: "USER_NOT_LOADED",
       });
     });
+};
+
+export const taskActions = (type, data) => async (dispatch) => {
+  if (type == "ADD") {
+    //hit add endpoint
+    axiosConfig.post("/users/addtask", data).then((response) => {
+      dispatch({
+        type: "TASK",
+        payload: response.data.tasks,
+      });
+    });
+  } else if (type == "UPDATE") {
+    //hit update endpoint
+    axiosConfig.post("/users/updatetask", data).then((response) => {
+      dispatch({
+        type: "TASK",
+        payload: response.data.tasks,
+      });
+    });
+  } else if (type == "GET") {
+    //hit get endpoint
+    axiosConfig.get("/users/fetchtasks").then((response) => {
+      dispatch({
+        type: "TASK",
+        payload: response.data.tasks,
+      });
+    });
+  } else {
+    //hit delete endpoint
+    axiosConfig.delete("/users/removetask", data).then((response) => {
+      dispatch({
+        type: "TASK",
+        payload: response.data.tasks,
+      });
+    });
+  }
+};
+
+export const statusActions = (type, data) => async (dispatch) => {
+  if (type == "ADD") {
+    //hit add endpoint
+    axiosConfig.post("/users/addstatus", data).then((response) => {
+      dispatch({
+        type: "STATUS",
+        payload: response.data.statuses,
+      });
+    });
+  } else if (type == "UPDATE") {
+    //hit update endpoint
+    axiosConfig.post("/users/updatestatus", data).then((response) => {
+      dispatch({
+        type: "STATUS",
+        payload: response.data.status,
+      });
+    });
+  } else if (type == "GET") {
+    //hit get endpoint
+    axiosConfig.get("/users/fetchstatuses").then((response) => {
+      dispatch({
+        type: "STATUS",
+        payload: response.data.status,
+      });
+    });
+  } else {
+    //hit delete endpoint
+    axiosConfig.delete("/users/removestatus").then((response) => {
+      dispatch({
+        type: "STATUS",
+        payload: response.data.status,
+      });
+    });
+  }
 };

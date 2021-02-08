@@ -147,15 +147,14 @@ router.route("/clearcookie").delete(async (req, res) => {
 });
 
 router.route("/addtask").post(async (req, res) => {
-  console.log("here");
+    // **WHEN FINISHED TESTING ADD AUTH** let username = req.user
   let username = req.body.username;
   User.findOne({username: username})
   .then((user) => {
-    console.log(user);
     user.tasks.push(req.body.task);
     user.save()
     .then(() => {
-      res.status(200).json('Task added');
+      res.status(200).json({tasks: user.tasks});
     })
   })
   .catch((err) => {
@@ -164,6 +163,7 @@ router.route("/addtask").post(async (req, res) => {
 });
 
 router.route("/updatetask").post(async (req, res) => {
+    // **WHEN FINISHED TESTING ADD AUTH** let username = req.user
   let username = req.body.username;
   User.findOne({username: username})
   .then(async (user) => {
@@ -171,7 +171,7 @@ router.route("/updatetask").post(async (req, res) => {
     user.tasks.id(req.body.id).set({...tasks, ...req.body.newfields});
     user.save()
     .then(() => {
-      return res.status(200).json('task updated!');
+      return res.status(200).json({tasks: user.tasks});
     })
   })
   .catch((err) => {
@@ -181,13 +181,15 @@ router.route("/updatetask").post(async (req, res) => {
 });
 
 router.route("/removetask").delete(async (req, res) => {
+    // **WHEN FINISHED TESTING ADD AUTH** let username = req.user
   let username = req.body.username;
   User.findOne({username: username})
   .then((user) => {
     user.tasks.id(req.body.id).remove();
     user.save()
     .then(() => {
-      return res.status(200);
+      //return updated tasks list to the action to dispatch to update state
+      return res.status(200).json({tasks: user.tasks});
     })
   })
   .catch((err) => {
@@ -195,6 +197,63 @@ router.route("/removetask").delete(async (req, res) => {
   })
 });
 
+router.route("/fetchtasks").get(auth, async (req, res) => {
+  let username = req.user;
+  User.findOne({username: username})
+  .then((user) => {
+    return res.status(200).json({tasks: user.tasks});
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  });
+})
+
+router.route("/addstatus").post(async (req, res) => {
+    // **WHEN FINISHED TESTING ADD AUTH** let username = req.user
+  let username = req.body.username;
+  User.findOne({username: username})
+  .then((user) => {
+    user.statuses.push(req.body.status);
+    user.save()
+    .then(() => {
+      //return updated tasks list to the action to dispatch to update state
+      return res.status(200).json({statuses: user.statuses});
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  });
+})
+
+router.route("/removestatus").delete(async (req, res) => {
+    // **WHEN FINISHED TESTING ADD AUTH** let username = req.user
+  let username = req.body.username;
+  User.findOne({username: username})
+  .then((user) => {
+    user.statuses.id(req.body.id).remove();
+    user.save()
+    .then(() => {
+      //return updated tasks list to the action to dispatch to update state
+      return res.status(200).json({statuses: user.statuses});
+    })
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  })
+});
+
+//For get requests we can know who the user is by the auth token
+
+router.route("/fetchstatuses").get(auth, async (req,res) => {
+  let username = req.user;
+  User.findOne({username: username})
+  .then((user) => {
+    return res.status(200).json({statuses: user.statuses});
+  })
+  .catch((err) => {
+    return res.sendStatus(403);
+  });
+})
 
 
 module.exports = router;
