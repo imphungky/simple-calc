@@ -92,6 +92,7 @@ function Calculator({ handle, course, authAction, gradeColour }) {
       if (checkEmptyFields(grades)) {
         return -1;
       }
+      grades = grades.filter((lst) => lst[0] === true);
       for (let i = 0; i < grades.length; i++) {
         grade += (grades[i][2] * grades[i][3]) / 100;
         weight += grades[i][3] / 100;
@@ -137,7 +138,6 @@ function Calculator({ handle, course, authAction, gradeColour }) {
     let display = [];
     if (modifygrades !== undefined) {
       for (var i = 0; i < modifygrades.length; i++) {
-        console.log("grades");
         display.push(
           <Flex>
             <Checkbox
